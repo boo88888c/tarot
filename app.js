@@ -8,13 +8,14 @@ const spreadSelect = document.querySelector("#spreadSelect");
 const drawButton = document.querySelector("#drawButton");
 const drawHint = document.querySelector("#drawHint");
 const charCount = document.querySelector("#charCount");
+const drawingState = document.querySelector("#drawingState");
 const resultSection = document.querySelector("#resultSection");
 const selectedCards = document.querySelector("#selectedCards");
 const promptOutput = document.querySelector("#promptOutput");
 const copyPromptButton = document.querySelector("#copyPromptButton");
 const copyStatus = document.querySelector("#copyStatus");
 const gptUrlInput = document.querySelector("#gptUrlInput");
-const copyLinkButton = document.querySelector("#copyLinkButton");
+const openLinkButton = document.querySelector("#openLinkButton");
 
 let selected = [];
 
@@ -93,20 +94,13 @@ function buildPrompt() {
 ${cardLines}`;
 }
 
-async function copyLink() {
+function openLink() {
   const url = gptUrlInput.value.trim();
   if (!url) {
     copyStatus.textContent = "請先填入連結。";
     return;
   }
-  try {
-    await navigator.clipboard.writeText(url);
-    copyStatus.textContent = "連結已複製。";
-  } catch {
-    gptUrlInput.select();
-    document.execCommand("copy");
-    copyStatus.textContent = "已選取連結，請手動複製。";
-  }
+  window.open(url, "_blank", "noreferrer");
 }
 
 function finishDraw() {
@@ -124,7 +118,17 @@ function drawCards() {
     orientation: randomOrientation()
   }));
   copyStatus.textContent = "";
-  finishDraw();
+
+  // 顯示抽牌動畫
+  resultSection.hidden = true;
+  drawingState.hidden = false;
+  drawButton.disabled = true;
+
+  setTimeout(() => {
+    drawingState.hidden = true;
+    drawButton.disabled = false;
+    finishDraw();
+  }, 2000);
 }
 
 async function copyPrompt() {
@@ -141,7 +145,7 @@ async function copyPrompt() {
 
 drawButton.addEventListener("click", drawCards);
 copyPromptButton.addEventListener("click", copyPrompt);
-copyLinkButton.addEventListener("click", copyLink);
+openLinkButton.addEventListener("click", openLink);
 
 questionInput.addEventListener("input", () => {
   charCount.textContent = `${questionInput.value.length}/300`;
@@ -158,6 +162,7 @@ interpretationInput.addEventListener("input", () => {
 
 spreadSelect.addEventListener("change", () => {
   resultSection.hidden = true;
+  drawingState.hidden = true;
   selected = [];
   selectedCards.innerHTML = "";
   promptOutput.value = "";

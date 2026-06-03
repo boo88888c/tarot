@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>塔羅抽牌工具</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260524-1" />
   </head>
   <body>
     <main class="app-shell">
@@ -28,7 +28,7 @@
               問題
             </label>
             <div class="textarea-wrap">
-              <textarea id="questionInput" rows="4" maxlength="300" placeholder="輸入這次想問的事情"></textarea>
+              <textarea id="questionInput" rows="3" maxlength="300" placeholder="輸入這次想問的事情"></textarea>
               <span id="charCount" class="char-count">0/300</span>
             </div>
           </div>
@@ -92,6 +92,12 @@
           </div>
         </div>
 
+        <!-- 抽牌動畫 -->
+        <div id="drawingState" class="drawing-state" hidden>
+          <span class="drawing-rune" aria-hidden="true">✦</span>
+          <p class="drawing-label">抽牌中</p>
+        </div>
+
         <section id="resultSection" class="result-section" hidden>
 
           <div class="section-heading">
@@ -116,7 +122,7 @@
                 </button>
               </div>
             </div>
-            <textarea id="promptOutput" class="prompt-output" rows="14" readonly></textarea>
+            <textarea id="promptOutput" class="prompt-output" rows="7" readonly></textarea>
             <p id="copyStatus" class="copy-status" aria-live="polite"></p>
           </article>
 
@@ -129,13 +135,13 @@
           </div>
           <div class="link-row">
             <input id="gptUrlInput" type="url" placeholder="貼上你的 GPTs 連結" />
-            <button id="copyLinkButton" class="secondary-button" type="button">
+            <button id="openLinkButton" class="secondary-button" type="button">
               <svg viewBox="0 0 16 16" fill="none" width="13" height="13">
-                <path d="M6.5 9.5l-2 2a2.5 2.5 0 000 3.5 2.5 2.5 0 003.5 0l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-                <path d="M9.5 6.5l2-2a2.5 2.5 0 000-3.5 2.5 2.5 0 00-3.5 0l-2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-                <path d="M9.5 6.5l-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M7 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M10 2h4v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 2L8 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
               </svg>
-              複製連結
+              開啟連結
             </button>
           </div>
         </div>
@@ -143,6 +149,6 @@
       </section>
 
     </main>
-    <script type="module" src="./app.js?v=20260523-1"></script>
+    <script type="module" src="./app.js?v=20260524-1"></script>
   </body>
 </html>
