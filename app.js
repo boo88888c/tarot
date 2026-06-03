@@ -170,4 +170,13 @@ spreadSelect.addEventListener("change", () => {
   drawHint.textContent = "選擇適合的牌陣，一鍵抽牌，系統會用瀏覽器高品質亂數自動抽出不重複的牌。";
 });
 
+// 讀取上次儲存的連結
+const savedUrl = localStorage.getItem("gptUrl");
+if (savedUrl) gptUrlInput.value = savedUrl;
+
+// 輸入時自動儲存
+gptUrlInput.addEventListener("input", () => {
+  localStorage.setItem("gptUrl", gptUrlInput.value.trim());
+});
+
 populateControls();
