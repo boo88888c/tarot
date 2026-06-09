@@ -14,8 +14,6 @@ const selectedCards = document.querySelector("#selectedCards");
 const promptOutput = document.querySelector("#promptOutput");
 const copyPromptButton = document.querySelector("#copyPromptButton");
 const copyStatus = document.querySelector("#copyStatus");
-const gptUrlInput = document.querySelector("#gptUrlInput");
-const openLinkButton = document.querySelector("#openLinkButton");
 
 let selected = [];
 
@@ -76,7 +74,7 @@ function buildPrompt() {
   const spread = currentSpread();
   const question = questionInput.value.trim() || "使用者未填寫問題，請以一般狀態指引解讀。";
   const topic = topicInput.value.trim() || "未指定";
-  const interpretation = interpretationInput.value.trim() || "標準解讀";
+  const interpretation = interpretationInput.value.trim();
   const cardLines = selected
     .map((card, index) => {
       const position = spread.positions?.[index];
@@ -94,14 +92,6 @@ function buildPrompt() {
 ${cardLines}`;
 }
 
-function openLink() {
-  const url = gptUrlInput.value.trim();
-  if (!url) {
-    copyStatus.textContent = "請先填入連結。";
-    return;
-  }
-  window.open(url, "_blank", "noreferrer");
-}
 
 function finishDraw() {
   renderSelectedCards();
@@ -145,7 +135,6 @@ async function copyPrompt() {
 
 drawButton.addEventListener("click", drawCards);
 copyPromptButton.addEventListener("click", copyPrompt);
-openLinkButton.addEventListener("click", openLink);
 
 questionInput.addEventListener("input", () => {
   charCount.textContent = `${questionInput.value.length}/300`;
@@ -170,13 +159,5 @@ spreadSelect.addEventListener("change", () => {
   drawHint.textContent = "選擇適合的牌陣，一鍵抽牌，系統會用瀏覽器高品質亂數自動抽出不重複的牌。";
 });
 
-// 讀取上次儲存的連結
-const savedUrl = localStorage.getItem("gptUrl");
-if (savedUrl) gptUrlInput.value = savedUrl;
-
-// 輸入時自動儲存
-gptUrlInput.addEventListener("input", () => {
-  localStorage.setItem("gptUrl", gptUrlInput.value.trim());
-});
 
 populateControls();
