@@ -428,6 +428,12 @@ textarea {
   border-color: rgba(154, 112, 32, 0.5);
 }
 
+.secondary-button.is-copied {
+  background: rgba(58, 138, 98, 0.1);
+  border-color: rgba(58, 138, 98, 0.35);
+  color: var(--green);
+}
+
 /* ── Prompt Output ── */
 .prompt-output {
   width: 100%;

@@ -121,14 +121,25 @@ function drawCards() {
   }, 2000);
 }
 
+function flashCopied() {
+  copyPromptButton.innerHTML = `<svg viewBox="0 0 12 10" fill="none" width="13" height="13"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> 已複製`;
+  copyPromptButton.classList.add("is-copied");
+  setTimeout(() => {
+    copyPromptButton.innerHTML = `<svg viewBox="0 0 16 16" fill="none" width="13" height="13"><rect x="5" y="5" width="9" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M3 11H2.5A1.5 1.5 0 011 9.5v-8A1.5 1.5 0 012.5 0h7A1.5 1.5 0 0111 1.5V3" stroke="currentColor" stroke-width="1.3"/></svg> 複製`;
+    copyPromptButton.classList.remove("is-copied");
+  }, 1500);
+}
+
 async function copyPrompt() {
   if (!promptOutput.value) return;
   try {
     await navigator.clipboard.writeText(promptOutput.value);
+    flashCopied();
     copyStatus.textContent = "已複製，可以貼到 GPT。";
   } catch {
     promptOutput.select();
     document.execCommand("copy");
+    flashCopied();
     copyStatus.textContent = "已選取提示詞，若沒有自動複製請手動複製。";
   }
 }
