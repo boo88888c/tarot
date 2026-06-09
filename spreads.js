@@ -33,5 +33,11 @@ export const SPREADS = [
     label: "五張",
     cardCount: 5,
     promptMode: "overview"
+  },
+  {
+    id: "six",
+    label: "六張",
+    cardCount: 6,
+    promptMode: "overview"
   }
 ];
