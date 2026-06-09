@@ -26,7 +26,7 @@ export const SPREADS = [
     label: "四張",
     cardCount: 4,
     promptMode: "weeks",
-    positions: ["第一週", "第二週", "第三週", "第四週"]
+    positions: []
   },
   {
     id: "five",
