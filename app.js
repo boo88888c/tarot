@@ -14,6 +14,8 @@ const selectedCards = document.querySelector("#selectedCards");
 const promptOutput = document.querySelector("#promptOutput");
 const copyPromptButton = document.querySelector("#copyPromptButton");
 const copyStatus = document.querySelector("#copyStatus");
+const gptUrlInput = document.querySelector("#gptUrlInput");
+const openLinkButton = document.querySelector("#openLinkButton");
 
 let selected = [];
 
@@ -144,8 +146,18 @@ async function copyPrompt() {
   }
 }
 
+function openLink() {
+  const url = gptUrlInput.value.trim();
+  if (!url) {
+    copyStatus.textContent = "請先填入連結。";
+    return;
+  }
+  window.open(url, "_blank", "noreferrer");
+}
+
 drawButton.addEventListener("click", drawCards);
 copyPromptButton.addEventListener("click", copyPrompt);
+openLinkButton.addEventListener("click", openLink);
 
 questionInput.addEventListener("input", () => {
   charCount.textContent = `${questionInput.value.length}/300`;
@@ -170,5 +182,12 @@ spreadSelect.addEventListener("change", () => {
   drawHint.textContent = "選擇適合的牌陣，一鍵抽牌，系統會用瀏覽器高品質亂數自動抽出不重複的牌。";
 });
 
+// 讀取上次儲存的連結
+const savedUrl = localStorage.getItem("gptUrl");
+if (savedUrl) gptUrlInput.value = savedUrl;
+
+gptUrlInput.addEventListener("input", () => {
+  localStorage.setItem("gptUrl", gptUrlInput.value.trim());
+});
 
 populateControls();
